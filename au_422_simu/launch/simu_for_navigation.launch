@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <arg name="world" default="env"/>
+    <arg name="rviz_conf" default="config_rds"/>
+
+    <!-- start world -->
+    <param name="use_sim_time" value="true" />
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find au_422_simu)/worlds/$(arg world).world"/>
+    <arg name="paused" value="false"/>
+		<arg name="use_sim_time" value="true"/>
+		<arg name="gui" value="true"/>
+		<arg name="headless" value="false"/>
+		<arg name="debug" value="false"/>
+	</include>
+
+    <param name="robot_description" command="xacro --inorder '$(find au_422_robot_description)/urdf/robot_for_navigation.xacro'"/>
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>
+
+    <!-- SPAWN ROBOT -->
+    <node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args="-urdf -param /robot_description -model robot_ipsa"/>
+    
+    <!-- RVIZ -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find au_422_simu)/config/$(arg rviz_conf).rviz"/>
+
+    <!-- MAP SERVER -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find au_422_navigation)/maps/my_map.yaml"/>
+
+    <!-- STATIC TF -->
+    <node name="static_transform_publisher_map_odom" pkg="tf" type="static_transform_publisher"
+		args="0 0 0 0 0 0 /map /odom 100"/>
+</launch>

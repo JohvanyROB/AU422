@@ -1,41 +1,57 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
 import rospy
-import cv2
-from geometry_msgs.msg import PoseWithCovarianceStamped, PoseStamped
+from geometry_msgs.msg import PoseStamped, Pose2D
 from nav_msgs.srv import GetMap
 from nav_msgs.msg import Path
+import tf
+
 from sys import exit
+import cv2
 
 
 class RRT:
     def __init__(self, K=0, dq=0):
-        """ Constructor """
-        rospy.Subscriber("/initialpose", PoseWithCovarianceStamped, self.starting_pose_cb)
+        """ Attributes """
+        self.robot_pose = Pose2D()
+        self.path = []
+        self.listener = tf.TransformListener()
+        #TO DO: add your attributes here.... 
+
+        """ Publishers and Subscribers """
+        rospy.Timer(rospy.Duration(secs=0.5), self.poseCb)
         rospy.Subscriber("/move_base_simple/goal", PoseStamped, self.goal_pose_cb)
         self.pathPub = rospy.Publisher("/path", Path, queue_size=1)
 
+        """ Load the map and create the related image"""
+        self.getMap()
+
+
+    # **********************************
+    def getMap(self):
+        """ Call the static_map service and then get the map """
         print("Waiting for map service to be available...")
-        rospy.wait_for_service('/static_map')   #The node waits for the service that provides the map to be avaiblable
-        try:    #GET the map data
+        rospy.wait_for_service('/static_map')
+        try:
             get_map = rospy.ServiceProxy('/static_map', GetMap)
             self.map = get_map().map
             print("Map received !")
         except rospy.ServiceException as e:
-            print("Map service call failed: %s"%e)
+            print(f"Map service call failed: {e}")
             exit()
 
-        """ TODO - Add your attributes """
-        self.starting_pose_received = False
-        self.path = []
-
-
+    
     # **********************************
-    def starting_pose_cb(self, msg):
-        """ TODO - Get the starting pose """
-        self.starting_pose_received = True
+    def poseCb(self, event):
+        """ Get the current position of the robot each 500ms """
+        try:
+            trans, rot = self.listener.lookupTransform("/map", "/base_footprint", rospy.Time(0))
+            self.robot_pose.x = trans[0]
+            self.robot_pose.y = trans[1]
+            print(f"Robot's pose: {self.robot_pose.x}, {self.robot_pose.y}")
+        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+            print(f"Could not transform /base_footprint to /map")
 
 
     # **********************************
@@ -44,14 +60,14 @@ class RRT:
         #get the goal pose here
         #....
 
-        #TO DOT TOUCH
-        if self.starting_pose_received:
-            self.run()
+        self.run()
+
 
     # **********************************
     def run(self):
         """ TODO - Implement the RRT algorithm """
         pass
+
 
     # **********************************
     def publishPath(self):

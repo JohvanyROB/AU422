@@ -1,0 +1,18 @@
+<?xml version='1.0'?>
+<launch>
+	<arg name="rviz_conf" default="config_rds"/>
+
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find au_422_navigation)/maps/my_map.yaml"/>
+
+	<node name="static_transform_publisher_map_odom" pkg="tf" type="static_transform_publisher"
+		args="0 0 0 0 0 0 /map /odom 100"/>
+
+    <node name="static_transform_publisher_odom_base_footprint" pkg="tf" type="static_transform_publisher"
+		args="-5 6.5 0 0 0 0 /odom /base_footprint 100"/>
+    
+    <param name="robot_description" command="xacro --inorder '$(find au_422_robot_description)/urdf/robot_for_navigation.xacro'"/>
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>
+
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find au_422_simu)/config/$(arg rviz_conf).rviz"/>
+</launch>

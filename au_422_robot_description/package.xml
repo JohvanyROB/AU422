@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>au_422_robot_description</name>
+  <version>1.0.0</version>
+  <description>Package for defining the robot that will be used during the simulation</description>
+  <maintainer email="johvany.gustave@ipsa.fr">Johvany Gustave</maintainer>
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <export>
+  </export>
+</package>

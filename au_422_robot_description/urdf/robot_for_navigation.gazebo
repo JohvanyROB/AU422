@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot>
+ <!-- base_link -->
+  <gazebo reference="base_link">
+    <material>Gazebo/Green</material>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+  </gazebo>
+
+  <!-- Left Wheel -->
+  <gazebo reference="left_wheel">
+    <material>Gazebo/Black</material>
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+  </gazebo>
+
+  <!-- Right Wheel -->
+  <gazebo reference="right_wheel">
+    <material>Gazebo/Black</material>
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+  </gazebo>
+
+  <!-- Front Wheel -->
+  <gazebo reference="front_wheel">
+    <material>Gazebo/Black</material>
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+  </gazebo>
+
+  <!-- Lidar Link -->
+  <gazebo reference="lidar_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+  <!-- PLUGIN FOR MOVING THE ROBOT -->
+    <gazebo>
+        <plugin name='object_controller' filename='libgazebo_ros_planar_move.so'>
+            <odometryFrame>odom</odometryFrame>
+            <updateRate>10.0</updateRate>
+            <robotBaseFrame>base_footprint</robotBaseFrame>
+            <commandTopic>cmd_vel</commandTopic>
+        </plugin>
+    </gazebo>
+</robot>

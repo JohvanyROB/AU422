@@ -1,0 +1,6 @@
+<?xml version='1.0'?>
+<launch>
+	<node name="my_rrt" pkg="au_422_navigation" type="path_planning_rrt.py" output="screen"/>
+
+    <node name="my_agent" pkg="au_422_navigation" type="agent.py" output="screen"/>
+</launch>
