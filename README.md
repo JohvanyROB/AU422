@@ -6,7 +6,7 @@ Go to "My rosjects" and create a new project (Select the ROS **Noetic** distribu
 
 
 
-In a terminal, follow the instructions **ONE AFTER THE OTHER** :
+Open the web shell and follow the instructions **ONE AFTER THE OTHER** :
 
 ```bash
 sudo apt update && sudo apt install ros-noetic-slam-karto -y
