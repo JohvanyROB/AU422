@@ -1,6 +1,6 @@
 # AU422
 
-Connect to [RDS](https://app.theconstructsim.com/#/){:target="_blank"} with your logins.
+Connect to [RDS](https://app.theconstructsim.com/#/) with your logins.
 
 Go to "My rosjects" and create a new project (Select the ROS **Noetic** distribution) and run it.
 
