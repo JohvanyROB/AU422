@@ -2,7 +2,7 @@
 
 Connect to [RDS](https://app.theconstructsim.com/#/) with your logins.
 
-Go to "My rosjects" and create a new project (Select the ROS Noetic distribution) and run it.
+Go to "My rosjects" and create a new project (Select the ROS **Noetic** distribution) and run it.
 
 
 
