@@ -12,7 +12,6 @@ Open the web shell and follow the instructions **ONE AFTER THE OTHER** :
 sudo apt update && sudo apt install ros-noetic-slam-karto -y
 cd ~/catkin_ws/src && git clone https://github.com/JohvanyROB/AU422.git
 cd ~/catkin_ws && catkin_make && source ~/catkin_ws/devel/setup.bash
-roscd au422_tp3/scripts && chmod +x path_planning_rrt.py
 ```
 
 
